@@ -13,18 +13,20 @@ package mavlc.context_analysis;
 
 import mavlc.syntax.statement.Declaration;
 
-/* TODO enter group information
- *
- * EiCB group number: ...
+/*
+ * EiCB group number: 103
  * Names and matriculation numbers of all group members:
- * ...
+ * Eric Schwerdtfeger 2862026
+ * Tobias Schneider 225673
+ * Felix Meißner 2743307
  */
 
 /**
  * A table for identifiers used inside a function.
  */
 public class IdentificationTable {
-	
+
+	protected Scope currentScope=null;
 	/**
 	 * Declares the given identifier in the current scope.
 	 *
@@ -32,8 +34,10 @@ public class IdentificationTable {
 	 * @param declaration the reference to the identifier's declaration site
 	 */
 	public void addIdentifier(String name, Declaration declaration) {
-		// TODO implement (task 2.1)
-		throw new UnsupportedOperationException();
+		if (currentScope!=null){
+			currentScope.addIdentifier(name, declaration);
+		}
+		else throw new IllegalStateException("no open scope");
 	}
 	
 	/**
@@ -43,23 +47,22 @@ public class IdentificationTable {
 	 * @return the identifier's innermost declaration site
 	 */
 	public Declaration getDeclaration(String name) {
-		// TODO implement (task 2.1)
-		throw new UnsupportedOperationException();
+		if (currentScope!=null)return currentScope.getDeclaration(name);
+		else throw new IllegalStateException("no open scope");
 	}
 	
 	/**
 	 * Opens a new scope.
 	 */
 	public void openNewScope() {
-		// TODO implement (task 2.1)
-		throw new UnsupportedOperationException();
+		currentScope=new Scope(currentScope);
 	}
 	
 	/**
 	 * Closes the current scope.
 	 */
 	public void closeCurrentScope() {
-		// TODO implement (task 2.1)
-		throw new UnsupportedOperationException();
+		if (currentScope!=null) currentScope=currentScope.parentScope;
+		else throw new IllegalStateException("No scope to close");
 	}
 }

@@ -16,11 +16,12 @@ import mavlc.syntax.AstNode;
 import mavlc.syntax.AstNodeBaseVisitor;
 import mavlc.syntax.expression.*;
 
-/* TODO enter group information
- *
- * EiCB group number: ...
+/*
+ * EiCB group number: 103
  * Names and matriculation numbers of all group members:
- * ...
+ * Eric Schwerdtfeger 2862026
+ * Tobias Schneider 225673
+ * Felix Meißner 2743307
  */
 
 public class ConstantExpressionEvaluator extends AstNodeBaseVisitor<Integer, Void> {
@@ -39,4 +40,41 @@ public class ConstantExpressionEvaluator extends AstNodeBaseVisitor<Integer, Voi
 	}
 	
 	// TODO implement (exercise 2.3)
+	@Override
+	public Integer visitAddition(Addition addition, Void __){
+		return addition.leftOperand.accept(this) + addition.rightOperand.accept(this);
+	}
+
+	@Override
+	public Integer visitSubtraction(Subtraction subtraction, Void __){
+		return subtraction.leftOperand.accept(this) - subtraction.rightOperand.accept(this);
+	}
+
+	@Override
+	public Integer visitMultiplication(Multiplication multiplication, Void __){
+		return multiplication.leftOperand.accept(this) * multiplication.rightOperand.accept(this);
+	}
+
+	@Override
+	public Integer visitDivision(Division division, Void __){
+		return division.leftOperand.accept(this) / division.rightOperand.accept(this);
+	}
+
+	@Override
+	public Integer visitExponentiation(Exponentiation exponentiation, Void __){
+		int base = exponentiation.leftOperand.accept(this);
+		int exponent = exponentiation.rightOperand.accept(this);
+		if (exponent < 0){
+			throw new ArithmeticException();
+		}
+		int power=1;
+		for (int i=0; i < exponent; i++){
+			power = power*base;
+		}
+		return power;
+	}
+	@Override
+	public Integer visitUnaryMinus(UnaryMinus unaryMinus, Void __){
+		return -unaryMinus.operand.accept(this);
+	}
 }
