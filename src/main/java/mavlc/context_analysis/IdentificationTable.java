@@ -17,7 +17,7 @@ import mavlc.syntax.statement.Declaration;
  * EiCB group number: 103
  * Names and matriculation numbers of all group members:
  * Eric Schwerdtfeger 2862026
- * Tobias Schneider 225673
+ * Tobias Schneider 2562287
  * Felix Meißner 2743307
  */
 
